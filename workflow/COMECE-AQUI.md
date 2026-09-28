@@ -28,6 +28,6 @@ Se quiser visualizar os contratos depois de registrá-los, instale `viewer/requi
 
 ## Quando a fundação termina
 
-A passagem para montagem exige, para cada tela: referências reconciliadas; vocação e áreas definidas; capacidades, ordem, estados e limites de layout descritos; receitas de produto separadas; bibliotecas IDS identificadas; e decisões estruturais resolvidas ou explicitamente bloqueadas. Só então use a skill de montagem no arquivo Core da nova rodada. O plugin de biblioteca de produto pertence a uma fase posterior.
+A passagem para montagem exige, para cada tela: referências reconciliadas; vocação e áreas definidas; capacidades, ordem, estados e limites de layout descritos; receitas de produto separadas; bibliotecas IDS identificadas; e decisões estruturais resolvidas ou explicitamente bloqueadas. Só então use a skill de montagem no arquivo designado como Core. Se o Figma Agent só retém a conversa no arquivo de referências, a pessoa pode designar **esse mesmo arquivo** como Core final: monte em uma página/área Core separada e preserve os frames citados pelos contratos. Não os apague na limpeza posterior sem preservar sua rastreabilidade. O plugin de biblioteca de produto pertence a uma fase posterior.
 
 Para detalhes e limites de transporte, leia o [fluxo completo](README.md) e [portar o ambiente](portar-ambiente.md).

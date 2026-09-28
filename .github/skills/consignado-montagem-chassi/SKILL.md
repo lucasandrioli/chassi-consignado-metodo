@@ -9,7 +9,9 @@ description: Monta ou atualiza o mestre Core de uma tela de qualquer etapa do co
 
 Você atua no Figma Agent, **uma tela por execução**. Receba o contrato da etapa, o contrato Core da tela atual, as receitas dos produtos participantes para conhecer os casos de estresse, referências citadas, bibliotecas IDS autorizadas e arquivo Core de destino. A pessoa pode colar os contratos completos na conversa; não presuma acesso a chats anteriores nem ao repositório local. Se faltar uma decisão estrutural indispensável, devolva a lacuna ao Analista. Não infira aprovação de conteúdo de produto a partir de um frame.
 
-Classifique o trabalho como `NOVA_TELA_CORE` ou `ATUALIZACAO_LOCALIZADA`. No segundo caso, identifique mestre local, subárvore/property/estado autorizado, quantidade exata de itens a criar e invariantes. Só essa fronteira pode mudar; não reconstrua o mestre inteiro para resolver um delta. As referências continuam somente leitura. Nunca monte no arquivo de referências, no IDS ou na biblioteca de produto.
+Classifique o trabalho como `NOVA_TELA_CORE` ou `ATUALIZACAO_LOCALIZADA`. No segundo caso, identifique mestre local, subárvore/property/estado autorizado, quantidade exata de itens a criar e invariantes. Só essa fronteira pode mudar; não reconstrua o mestre inteiro para resolver um delta. As referências continuam somente leitura. Nunca monte no IDS nem na biblioteca de produto.
+
+O Figma Agent pode manter a conversa vinculada ao arquivo atual. Se a pessoa designar explicitamente esse arquivo, que também contém as referências, como **destino Core final**, monte em uma página ou área Core separada **no mesmo arquivo**. Não exija outro arquivo nem outra conversa. Preserve os frames de referência e seus IDs; eles sustentam os links dos contratos. Uma limpeza posterior só pode remover ou mover o que não romper essas evidências. Sem essa designação explícita, não transforme o arquivo de referências em Core por iniciativa própria.
 
 Exija versão e estado dos contratos. O contrato da etapa pode permanecer **proposta parcial** porque as outras telas ainda não foram analisadas; isso não bloqueia a prova isolada da tela atual quando seus contratos e decisões estruturais estão suficientes. Identifique a prova como tal, sem tratá-la como publicação pronta para consumo. Quando a pessoa autorizar a montagem, não transforme isso em aprovação automática das regras de produto.
 
@@ -29,7 +31,7 @@ Se um IDS aninhado não expuser um controle que o produto precisará, primeiro v
 
 ## Preflight antes de escrever
 
-1. Confira arquivo Core, tela, versão dos contratos, fronteira de edição e alvos. Em atualização localizada, registre antes nomes, IDs, filhos, variantes, properties, vínculos e estado de publicação que devem permanecer intactos; confirme que o alvo é local e editável.
+1. Confira arquivo Core, tela, versão dos contratos, fronteira de edição e alvos. Quando Core e referências dividirem o arquivo, identifique a página/área de cada um e confirme que a montagem não tocará os frames de evidência. Em atualização localizada, registre antes nomes, IDs, filhos, variantes, properties, vínculos e estado de publicação que devem permanecer intactos; confirme que o alvo é local e editável.
 2. Confirme no Figma cada candidato IDS e sua configuração pública real. Uma property sugerida pelo Analista, mas ausente na versão conectada, é impasse, não licença para editar a instância por dentro.
 3. Leia o blueprint semântico e os casos de estresse da tela atual. Confira se etapa e receitas de produto exigem uma capacidade comum ainda não contratada; devolva ao contrato antes de montar.
 4. Planeje unidades verificáveis: casca, áreas, blocos repetíveis, estados, ações e exposição pública. Cada unidade tem resultado e prova de término.
