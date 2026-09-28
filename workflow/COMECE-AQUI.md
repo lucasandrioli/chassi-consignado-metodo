@@ -11,16 +11,16 @@ Este guia serve para iniciar **qualquer etapa do consignado** com as referência
 
 ## Primeira tela
 
-Escolha **uma tela** da etapa e envie ao Figma Agent:
+Escolha **uma tela** da etapa e envie ao Figma Agent. Informe o nome da etapa quando souber; o nome da tela nunca é usado para inventá-lo:
 
 > Use `/consignado-analise-etapa` para analisar a tela **`<nome da tela>`** da etapa **`<nome da etapa>`**. As referências estão em **`<link do arquivo ou Section>`**. Descubra os produtos e cenários nos frames; investigue Operação, Contexto e Produtos Adicionais quando aparecerem. As bibliotecas IDS **`<nomes e versões>`** estão conectadas à conversa. Faça somente leitura e entregue separadamente a atualização do contrato da etapa, o contrato Core da tela sem texto de produto e o contrato de cada produto observado, com evidências e pendências.
 
-A análise deve devolver **rascunhos**, não contratos aprovados. Confira contagens, vocações, diferenças visíveis e afirmações sobre regras de negócio. Uma combinação que não aparece nas referências permanece desconhecida. O contrato da etapa é cumulativo: ao analisar a próxima tela, acrescente sua função sem apagar as anteriores.
+A análise deve devolver **rascunhos**, não contratos aprovados. Se a etapa ainda não foi confirmada, escreva `etapa não confirmada` no pedido: a skill pode ler a tela, mas deve perguntar a etapa e deixar o contrato da etapa pendente, sem derivá-la do título da tela. Confira a tabela com um link por frame, as contagens reconciliadas, as vocações, as diferenças com evidência, a origem IDS realmente inspecionada e as pendências. O contrato da etapa é cumulativo: ao analisar a próxima tela, acrescente sua função sem apagar as anteriores. Uma combinação que não aparece nas referências permanece desconhecida.
 
 ## Guardar o resultado localmente
 
-1. Crie `etapas/<id-da-etapa>/contratos/`. Salve os Markdown revisados usando os [modelos de etapa](templates/contrato-etapa.md), [tela/Core](templates/contrato-tela.md) e [produto por tela](templates/contrato-produto-tela.md). Mantenha `**Versão:** 0.1` na primeira revisão e aumente a versão quando mudar um contrato já registrado.
-2. Copie o [modelo de registro](templates/registro-contratos.json) para `etapas/<id-da-etapa>/contratos/registro.json`. Substitua os IDs, caminhos, produtos e dependências de exemplo pelos desta rodada. Liste esse registro em `contracts/index.json`, a partir do [modelo de índice](templates/indice-registros.json). O registro deve conter a etapa, cada tela analisada e a receita de cada produto nessa tela.
+1. Crie `etapas/<id-da-etapa>/contratos/`. Salve ali os Markdown revisados usando os [modelos de etapa](templates/contrato-etapa.md), [tela/Core](templates/contrato-tela.md) e [produto por tela](templates/contrato-produto-tela.md). Mantenha `**Versão:** 0.1` na primeira revisão e aumente a versão quando mudar um contrato já registrado. Antes do registro, compare todos os documentos com os campos obrigatórios dos modelos; pendências técnicas podem continuar explícitas, mas identidade, versões, referências e tabelas exigidas não podem simplesmente faltar.
+2. Copie o [modelo de registro](templates/registro-contratos.json) para `etapas/<id-da-etapa>/contratos/registro.json`. Substitua os IDs, caminhos, produtos e dependências de exemplo pelos desta rodada. Liste esse registro em `contracts/index.json`, a partir do [modelo de índice](templates/indice-registros.json). **`contracts/` guarda o índice; os Markdown e o registro da rodada ficam em `etapas/<id-da-etapa>/contratos/`.** O registro deve conter a etapa, cada tela analisada e a receita de cada produto nessa tela.
 3. Depois de conferir o conteúdo, execute `node scripts/contracts.cjs lock --registry etapas/<id-da-etapa>/contratos/registro.json --note "revisão inicial"` e `node scripts/contracts.cjs check`. O snapshot detecta mudanças posteriores; **não significa aprovação de negócio**.
 4. Repita a análise, uma tela por vez, até cobrir as telas da etapa. Revise a vocação e a relação entre telas no contrato cumulativo. Marque decisões que alteram estrutura ou presença como pendentes até haver evidência ou confirmação.
 
