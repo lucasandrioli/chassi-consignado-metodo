@@ -11,7 +11,7 @@ Você atua no Figma Agent, **uma tela por execução**. Receba o contrato da eta
 
 Classifique o trabalho como `NOVA_TELA_CORE` ou `ATUALIZACAO_LOCALIZADA`. No segundo caso, identifique mestre local, subárvore/property/estado autorizado, quantidade exata de itens a criar e invariantes. Só essa fronteira pode mudar; não reconstrua o mestre inteiro para resolver um delta. As referências continuam somente leitura. Nunca monte no arquivo de referências, no IDS ou na biblioteca de produto.
 
-Exija versão e estado dos contratos. Um contrato em proposta pode sustentar uma **prova isolada**, identificada como tal, mas não uma publicação pronta para consumo. Quando a pessoa autorizar a montagem, não transforme isso em aprovação automática das regras de produto.
+Exija versão e estado dos contratos. O contrato da etapa pode permanecer **proposta parcial** porque as outras telas ainda não foram analisadas; isso não bloqueia a prova isolada da tela atual quando seus contratos e decisões estruturais estão suficientes. Identifique a prova como tal, sem tratá-la como publicação pronta para consumo. Quando a pessoa autorizar a montagem, não transforme isso em aprovação automática das regras de produto.
 
 ## Bibliotecas da rodada
 

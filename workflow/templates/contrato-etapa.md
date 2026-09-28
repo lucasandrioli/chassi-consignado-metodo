@@ -10,6 +10,8 @@
 
 **Referências:** `<links e natureza do conteúdo>`
 
+**Cobertura atual:** `<telas e frames analisados nesta rodada; contrato parcial até reconciliar o conjunto>`
+
 ## Vocação da etapa
 
 `<O que a pessoa precisa compreender ou fazer; separar observação, inferência e confirmação. Não deduzir ordem ou obrigatoriedade de frames isolados.>`
@@ -19,6 +21,8 @@
 | Tela e ID | Vocação | Evidência | Relação com outras telas | Estado do contrato | Pendência |
 | --- | --- | --- | --- | --- | --- |
 |  |  |  | observada / inferida / confirmada |  |  |
+
+Uma tela mencionada, mas não analisada, entra apenas com esse estado e sem vocação ou relação inventada. O contrato da etapa pode ser registrado como **proposta parcial** enquanto outras telas aguardam análise. Isso não bloqueia o registro nem uma prova isolada da tela atual quando suas próprias evidências estão completas.
 
 ## Produtos, eixos e cobertura
 
@@ -41,3 +45,5 @@ Quando surgir um novo item, registre tela, área, vocação e cenário. Verifiqu
 | Decisão | Evidência atual | Quem confirma | Impacto na montagem | Estado |
 | --- | --- | --- | --- | --- |
 |  |  |  |  |  |
+
+Classifique as decisões como `BLOQUEIA_TELA_ATUAL`, `PENDENTE_DA_ETAPA` ou `FORA_DO_RECORTE`. A finalidade, ordem e cobertura completa da etapa ficam abertas até analisar as demais telas; não as apresente como impedimento automático para a tela desta rodada.
