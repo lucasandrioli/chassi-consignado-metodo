@@ -1,5 +1,7 @@
 # Reconstruir o processo em outro ambiente
 
+O [repositório público do método](https://github.com/lucasandrioli/chassi-consignado-metodo) traz o [guia de início da fundação](COMECE-AQUI.md) e os arquivos descritos abaixo.
+
 Este repositório pode distribuir **método, skills e modelos de contrato**. Arquivos Figma, bibliotecas publicadas, chaves, permissões e conversas do Figma Agent pertencem ao ambiente onde foram criados; um clone Git não os transfere. Uma rodada local de exemplo não é configuração para importar em outro ambiente.
 
 ## Pacote portátil
