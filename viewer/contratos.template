@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Consulta local dos contratos de etapa, tela e produto do chassi.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231b3550'/%3E%3Cpath d='M18 17h28v6H18zm0 12h28v6H18zm0 12h19v6H18z' fill='white'/%3E%3C/svg%3E">
+  <title>Contratos do chassi</title>
+  <style>
+    :root { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #182a3c; background: #f5f7fb; font-size: 16px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: #245daa; }
+    .app { min-height: 100vh; display: grid; grid-template-columns: 252px minmax(0, 1fr); }
+    .sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 25px 13px; color: #dce8f3; background: #193149; }
+    .brand { display: flex; align-items: center; gap: 11px; padding: 0 12px 31px; }
+    .brand-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; background: #fff; color: #193149; font-size: 18px; font-weight: 800; }
+    .brand strong { display: block; font-size: .96rem; letter-spacing: -.025em; }
+    .brand small { display: block; margin-top: 2px; color: #a9c1d7; font-size: .75rem; }
+    .side-label { margin: 0 13px 9px; color: #9eb7cd; font-size: .75rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    .stage-select { display: block; width: calc(100% - 22px); margin: 0 11px 28px; padding: 10px 11px; border: 1px solid #49627a; border-radius: 9px; color: #fff; background: #28445f; font-size: .875rem; font-weight: 650; }
+    .side-nav { display: grid; gap: 4px; }
+    .side-nav button { width: 100%; min-height: 45px; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 0; border-radius: 9px; color: #d3e0eb; background: transparent; text-align: left; font-size: .875rem; line-height: 1.3; }
+    .side-nav button:hover { background: #2a4865; }
+    .side-nav button.active { color: #fff; background: #335675; font-weight: 700; }
+    .side-index { width: 27px; flex: 0 0 auto; color: #a8c5dc; font-size: .76rem; font-weight: 750; }
+    .side-nav button.active .side-index { color: #fff; }
+    .sidebar-note { margin: 32px 13px 0; padding-top: 17px; border-top: 1px solid #36536e; color: #abc1d3; font-size: .78rem; line-height: 1.5; }
+    .main-column { min-width: 0; }
+    .toolbar { position: sticky; top: 0; z-index: 20; min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 11px clamp(22px, 3.5vw, 54px); border-bottom: 1px solid #e0e6ef; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); }
+    .breadcrumb { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #64768a; font-size: .875rem; }
+    .breadcrumb strong { color: #243c53; }
+    .toolbar-actions { display: flex; align-items: center; gap: 11px; }
+    .search-wrap { position: relative; }
+    .search-wrap input { width: min(300px, 30vw); height: 38px; padding: 0 12px 0 36px; border: 1px solid #cbd6e2; border-radius: 9px; outline: 0; background: #f8fafd; color: #20354a; font-size: .875rem; }
+    .search-wrap input:focus { border-color: #5689c6; box-shadow: 0 0 0 3px #e4eefb; }
+    .search-wrap::before { content: "⌕"; position: absolute; left: 12px; top: 5px; color: #6e8297; font-size: 1.4rem; line-height: 1; pointer-events: none; }
+    .search-results { position: absolute; top: 45px; right: 0; z-index: 30; width: min(490px, 88vw); max-height: 410px; overflow-y: auto; padding: 7px; border: 1px solid #d8e2ed; border-radius: 11px; background: #fff; box-shadow: 0 20px 50px #142b4a25; }
+    .search-results[hidden] { display: none; }
+    .search-results button { display: block; width: 100%; padding: 11px; border: 0; border-radius: 7px; color: #233a50; background: transparent; text-align: left; font-size: .875rem; }
+    .search-results button:hover { background: #edf4fd; }
+    .search-results small { display: block; margin-top: 4px; color: #63778c; font-size: .78rem; line-height: 1.35; }
+    .content { width: min(100%, 1500px); margin: 0 auto; padding: 32px clamp(22px, 3.5vw, 54px) 70px; }
+    .eyebrow { margin: 0 0 7px; color: #54718e; font-size: .78rem; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
+    .record-header { margin-bottom: 26px; }
+    .record-header h1 { margin: 0; color: #142c43; font-size: clamp(1.7rem, 2.5vw, 2.35rem); line-height: 1.2; letter-spacing: -.035em; }
+    .record-lead { max-width: 920px; margin: 13px 0 0; color: #4a5e72; font-size: 1rem; line-height: 1.6; }
+    .metadata { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+    .badge { display: inline-flex; align-items: center; min-height: 29px; padding: 5px 10px; border: 1px solid #d8e2ed; border-radius: 6px; color: #52677c; background: #fff; font-size: .78rem; font-weight: 680; }
+    .badge.proposal { border-color: #f0d9ab; color: #81571c; background: #fff6e6; }
+    .badge.approved { border-color: #b9dbc8; color: #23623d; background: #e9f7ee; }
+    .badge.changed { border-color: #efc1b4; color: #a04632; background: #fff0ec; }
+    .layer-bar { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 25px; padding: 5px; width: fit-content; border: 1px solid #dae4ef; border-radius: 10px; background: #ecf1f7; }
+    .layer-bar button { min-height: 37px; padding: 7px 14px; border: 0; border-radius: 7px; color: #4b6279; background: transparent; font-size: .875rem; font-weight: 650; }
+    .layer-bar button:hover { color: #225b9d; }
+    .layer-bar button.active { color: #174b88; background: #fff; box-shadow: 0 2px 7px #213b6016; }
+    .screen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: 12px; margin: 0 0 32px; }
+    .screen-card { min-height: 155px; padding: 19px; border: 1px solid #dbe5ef; border-radius: 11px; background: #fff; text-align: left; box-shadow: 0 5px 18px #142c4308; }
+    .screen-card:hover { border-color: #88a9d2; box-shadow: 0 8px 22px #142c4314; }
+    .screen-card small { display: block; margin-bottom: 13px; color: #6e83a0; font-size: .76rem; font-weight: 750; letter-spacing: .06em; }
+    .screen-card strong { display: block; margin-bottom: 7px; color: #183650; font-size: 1rem; }
+    .screen-card span { display: -webkit-box; overflow: hidden; color: #5b6e80; font-size: .83rem; line-height: 1.45; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+    .working-grid { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 18px; align-items: start; }
+    .section-nav { position: sticky; top: 93px; padding: 15px 10px; border: 1px solid #dce5ef; border-radius: 11px; background: #fff; }
+    .section-nav h2 { margin: 2px 12px 11px; color: #6d8195; font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; }
+    .section-nav button { display: block; width: 100%; padding: 10px 12px; border: 0; border-radius: 7px; color: #4f6377; background: transparent; text-align: left; font-size: .875rem; line-height: 1.35; }
+    .section-nav button:hover { color: #195b9f; background: #f2f6fb; }
+    .section-nav button.active { color: #155491; background: #e8f2ff; font-weight: 720; }
+    .section-nav .source-link { display: block; margin: 14px 12px 2px; padding-top: 15px; border-top: 1px solid #e4eaf0; color: #426895; font-size: .8rem; text-decoration: none; }
+    .record-card { min-width: 0; padding: clamp(19px, 2.4vw, 32px); border: 1px solid #dce5ef; border-radius: 11px; background: #fff; box-shadow: 0 6px 22px #1b344a0a; }
+    .card-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 20px; padding-bottom: 19px; border-bottom: 1px solid #e6ecf3; }
+    .card-head h2 { margin: 0; color: #18364f; font-size: 1.35rem; letter-spacing: -.025em; }
+    .card-head p { margin: 5px 0 0; color: #74869a; font-size: .81rem; }
+    .card-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .card-actions a, .card-actions button { padding: 7px 10px; border: 1px solid #d4e0eb; border-radius: 7px; color: #255c9b; background: #fff; font-size: .8rem; font-weight: 680; text-decoration: none; }
+    .card-actions a:hover, .card-actions button:hover { background: #eef5fe; }
+    .notice { margin: 0 0 20px; padding: 12px 15px; border: 1px solid #f0d8a9; border-radius: 8px; color: #795821; background: #fff8e9; font-size: .85rem; line-height: 1.5; }
+    .notice strong { display: block; margin-bottom: 3px; }
+    .prose { color: #2e4153; font-size: 1rem; line-height: 1.7; overflow-wrap: anywhere; }
+    .prose h2 { margin: 30px 0 12px; color: #173951; font-size: 1.2rem; }
+    .prose h3 { margin: 23px 0 9px; color: #214c75; font-size: 1.05rem; }
+    .prose p { margin: 0 0 17px; }
+    .prose ul, .prose ol { padding-left: 25px; margin: 0 0 18px; }
+    .prose li { margin: 5px 0; }
+    .prose code { padding: 2px 5px; border-radius: 4px; color: #234d73; background: #eef4fa; font-size: .88em; }
+    .prose blockquote { margin: 15px 0; padding: 8px 15px; border-left: 3px solid #8baed2; background: #f3f7fb; }
+    .table-wrap { max-width: 100%; margin: 17px 0 22px; overflow-x: auto; border: 1px solid #dce5ee; border-radius: 8px; }
+    .table-wrap table { min-width: 610px; width: 100%; border-collapse: collapse; font-size: .86rem; line-height: 1.45; }
+    .table-wrap th { padding: 11px 12px; color: #36546e; background: #edf3f9; text-align: left; white-space: nowrap; }
+    .table-wrap td { padding: 11px 12px; border-top: 1px solid #e5ebf2; vertical-align: top; }
+    .table-wrap tr:nth-child(even) td { background: #fafbfd; }
+    .field-list { display: grid; gap: 9px; margin: 17px 0 10px; }
+    .field-record { border: 1px solid #dce5ef; border-radius: 8px; background: #fff; }
+    .field-record[open] { border-color: #a9c4e0; background: #fbfdff; }
+    .field-record summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 15px; list-style: none; cursor: pointer; }
+    .field-record summary::-webkit-details-marker { display: none; }
+    .field-record summary::after { content: "⌄"; flex: 0 0 auto; color: #6686a8; font-size: 1.25rem; line-height: 1; }
+    .field-record[open] summary::after { transform: rotate(180deg); }
+    .field-summary { min-width: 0; }
+    .field-summary strong { display: block; color: #203b55; font-size: .98rem; }
+    .field-summary span { display: block; margin-top: 4px; color: #657b90; font-size: .84rem; line-height: 1.4; }
+    .field-record dl { display: grid; grid-template-columns: minmax(125px, 24%) minmax(0, 1fr); margin: 0; padding: 3px 15px 15px; border-top: 1px solid #e6edf4; font-size: .88rem; line-height: 1.5; }
+    .field-record dt, .field-record dd { margin: 0; padding: 9px 0; border-bottom: 1px solid #e9eef4; }
+    .field-record dt { padding-right: 13px; color: #6a7f93; font-weight: 690; }
+    .field-record dd { color: #334b60; }
+    .field-record dl > :nth-last-child(-n+2) { border-bottom: 0; }
+    .original-table { margin: 2px 0 20px; color: #557496; font-size: .82rem; }
+    .original-table summary { width: fit-content; cursor: pointer; }
+    .original-table .table-wrap { margin-top: 10px; }
+    .compare-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .compare-card { min-width: 0; padding: 23px; border: 1px solid #dce5ef; border-radius: 11px; background: #fff; }
+    .compare-card h2 { margin: 0; font-size: 1.22rem; }
+    .compare-card p { color: #52677b; font-size: .92rem; line-height: 1.6; }
+    .compare-card h3 { margin: 23px 0 10px; font-size: .9rem; color: #536f8c; }
+    .compare-card .table-wrap table { min-width: 530px; }
+    .primary-button { padding: 9px 13px; border: 1px solid #205e9c; border-radius: 7px; color: #fff; background: #205e9c; font-size: .85rem; font-weight: 700; }
+    .primary-button:hover { background: #184c7f; }
+    .empty { padding: 22px; border: 1px dashed #c9d8e6; border-radius: 8px; color: #597087; background: #fff; font-size: .9rem; }
+    @media (max-width: 1100px) { .working-grid { grid-template-columns: 200px minmax(0, 1fr); } }
+    @media (max-width: 850px) { .app { display: block; } .sidebar { position: static; height: auto; padding: 17px; } .brand { padding-bottom: 16px; } .stage-select { margin-bottom: 15px; } .side-nav { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); } .sidebar-note { display: none; } .toolbar { top: 0; } }
+    @media (max-width: 620px) { .sidebar { padding: 12px 15px; } .brand { padding: 0 0 9px; } .side-label { display: none; } .stage-select { width: 100%; margin: 0 0 8px; } .side-nav { display: flex; gap: 5px; overflow-x: auto; } .side-nav button { flex: 0 0 auto; width: auto; min-height: 34px; padding: 6px 10px; border: 1px solid #3d5c78; font-size: .8rem; } .side-index { display: none; } .toolbar { gap: 8px; } .breadcrumb { display: none; } .toolbar-actions, .search-wrap, .search-wrap input { width: 100%; } .content { padding-top: 22px; } .working-grid { display: block; } .section-nav { position: static; display: flex; align-items: center; gap: 4px; overflow-x: auto; margin-bottom: 12px; padding: 7px; white-space: nowrap; } .section-nav h2, .section-nav .source-link { display: none; } .section-nav button { flex: 0 0 auto; width: auto; } .compare-grid { grid-template-columns: 1fr; } .record-card { padding: 17px; } .table-wrap table { min-width: 560px; } }
+    @media print { .sidebar, .toolbar, .layer-bar, .section-nav, .card-actions, .screen-grid { display: none !important; } .app, .working-grid { display: block; } .content { padding: 0; } .record-card { border: 0; box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Navegação de etapas e telas">
+      <div class="brand"><div class="brand-icon">≡</div><div><strong>Contratos</strong><small>Chassi · base local</small></div></div>
+      <p class="side-label">Etapa</p>
+      <select id="stage-select" class="stage-select" aria-label="Selecionar etapa"></select>
+      <p class="side-label">Telas</p>
+      <nav id="side-nav" class="side-nav" aria-label="Telas da etapa"></nav>
+      <p class="sidebar-note">Os contratos Markdown são a fonte. Esta página organiza sua leitura por etapa, tela e produto.</p>
+    </aside>
+    <div class="main-column">
+      <header class="toolbar">
+        <div id="breadcrumb" class="breadcrumb"></div>
+        <div class="toolbar-actions">
+          <div class="search-wrap">
+            <input id="search" type="search" placeholder="Buscar em todos os contratos" aria-label="Buscar nos contratos" autocomplete="off">
+            <div id="search-results" class="search-results" hidden></div>
+          </div>
+        </div>
+      </header>
+      <main id="main" class="content"></main>
+    </div>
+  </div>
+  <script id="contract-data" type="application/json">__CONTRACT_DATA__</script>
+  <script>
+    const contracts = JSON.parse(document.getElementById('contract-data').textContent).contracts;
+    const stages = contracts.filter(item => item.layer === 'stage');
+    const $ = selector => document.querySelector(selector);
+    const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const shortText = (value, limit = 190) => { const text = String(value || '').replace(/\s+/g, ' ').trim(); return text.length > limit ? text.slice(0, limit).replace(/\s+\S*$/, '') + '…' : text; };
+    const titleOf = item => item?.title.split(' · ').at(-1) || '';
+    const stageOf = id => stages.find(item => item.stage === id);
+    const screensOf = stage => contracts.filter(item => item.layer === 'screen' && item.stage === stage);
+    const productsOf = (stage, screen) => contracts.filter(item => item.layer === 'product-screen' && item.stage === stage && item.screen === screen);
+    const stateLabel = state => ({proposal:'Proposta · sem aprovação',reviewed:'Revisado',approved:'Aprovado'})[state] || state;
+
+    function parseRoute() {
+      try {
+        const [requestedStage, screen = 'etapa', view = 'core', section = 'auto'] = location.hash.slice(1).split('/').map(decodeURIComponent);
+        return {stage: stageOf(requestedStage) ? requestedStage : stages[0]?.stage, screen, view, section};
+      } catch {
+        return {stage: stages[0]?.stage, screen:'etapa', view:'core', section:'auto'};
+      }
+    }
+    function route(stage, screen = 'etapa', view = 'core', section = 'auto') {
+      return '#' + [stage, screen, view, section].map(encodeURIComponent).join('/');
+    }
+    function navigate(stage, screen = 'etapa', view = 'core', section = 'auto') {
+      location.hash = route(stage, screen, view, section);
+      render();
+      window.scrollTo(0, 0);
+    }
+    function badges(contract, extra = '') {
+      const stateClass = contract.state === 'proposal' ? 'proposal' : contract.state === 'approved' ? 'approved' : '';
+      return `<span class="badge ${stateClass}">${escapeHTML(stateLabel(contract.state))}</span><span class="badge">Versão ${escapeHTML(contract.version)}</span>${contract.current ? '' : '<span class="badge changed">Alterado após registro</span>'}${extra}`;
+    }
+    function defaultSection(contract) {
+      const index = contract.sections.findIndex(item => /vocaç|áreas|campos/i.test(item.title));
+      return index < 0 ? 0 : index;
+    }
+    function sectionIndex(contract, requested) {
+      if (requested === 'full') return 'full';
+      const number = Number(requested);
+      return Number.isInteger(number) && number >= 0 && number < contract.sections.length ? number : defaultSection(contract);
+    }
+    function documentView(contract, requestedSection) {
+      if (!contract) return '<div class="empty">Este contrato ainda não está registrado.</div>';
+      const currentSection = sectionIndex(contract, requestedSection);
+      const full = currentSection === 'full';
+      const selected = full ? null : contract.sections[currentSection];
+      const nav = `<nav class="section-nav" aria-label="Seções do contrato"><h2>Conteúdo</h2>${contract.sections.map((item,index) => `<button type="button" class="${currentSection === index ? 'active' : ''}" data-stage="${escapeHTML(contract.stage)}" data-screen="${escapeHTML(contract.screen || 'etapa')}" data-view="${escapeHTML(contract.product || 'core')}" data-section="${index}">${escapeHTML(item.title)}</button>`).join('')}<button type="button" class="${full ? 'active' : ''}" data-stage="${escapeHTML(contract.stage)}" data-screen="${escapeHTML(contract.screen || 'etapa')}" data-view="${escapeHTML(contract.product || 'core')}" data-section="full">Texto integral</button><a class="source-link" href="${escapeHTML(contract.url)}" target="_blank" rel="noopener noreferrer">Abrir arquivo Markdown ↗</a></nav>`;
+      const notice = contract.current ? '' : '<div class="notice"><strong>Texto local alterado</strong>Este contrato mudou desde o último registro. Confira a versão antes de usar na montagem.</div>';
+      const heading = full ? 'Texto integral' : selected?.title || 'Contrato';
+      const body = full ? contract.html : selected?.html || contract.introHtml;
+      const card = `<article class="record-card"><div class="card-head"><div><h2>${escapeHTML(heading)}</h2><p>${escapeHTML(contract.path)}</p></div><div class="card-actions"><a href="${escapeHTML(contract.url)}" target="_blank" rel="noopener noreferrer">Markdown</a><button type="button" data-copy="${escapeHTML(contract.path)}">Copiar caminho</button></div></div>${notice}<div class="prose">${body || '<p>Sem conteúdo registrado nesta seção.</p>'}</div></article>`;
+      return `<div class="working-grid">${nav}${card}</div>`;
+    }
+    function compareView(products) {
+      if (!products.length) return '<div class="empty">Ainda não há contratos de produto para esta tela.</div>';
+      return `<div class="compare-grid">${products.map(item => {
+        const table = item.html.match(/<div class="table-wrap">[\s\S]*?<\/div>/)?.[0] || '';
+        return `<article class="compare-card"><p class="eyebrow">Contrato de produto</p><h2>${escapeHTML(item.product)}</h2><div class="metadata">${badges(item)}</div><h3>Vocação no produto</h3><p>${escapeHTML(item.vocation || item.statusNote || 'Leia o contrato completo.')}</p>${table ? `<h3>Primeira matriz do contrato</h3>${table}` : ''}<button type="button" class="primary-button" data-stage="${escapeHTML(item.stage)}" data-screen="${escapeHTML(item.screen)}" data-view="${escapeHTML(item.product)}">Abrir contrato</button></article>`;
+      }).join('')}</div>`;
+    }
+    function renderTableRecords() {
+      document.querySelectorAll('.record-card .table-wrap, .compare-card .table-wrap').forEach(wrap => {
+        const table = wrap.querySelector('table');
+        if (!table) return;
+        const headerRow = table.querySelector('thead tr') || table.querySelector('tr');
+        const headers = [...headerRow.cells].map(cell => cell.textContent.trim());
+        const rows = [...table.querySelectorAll('tbody tr')];
+        if (headers.length < 3 || !rows.length) return;
+        const titleColumn = /^ID(?: semântico)?$/i.test(headers[0]) && headers.length > 1 ? 1 : 0;
+        const secondaryColumn = headers.findIndex((name,index) => index !== titleColumn && /vocaç|diferença|conteúdo diferencial|áreas desenhadas/i.test(name));
+        const list = document.createElement('div');
+        list.className = 'field-list';
+        rows.forEach((row,index) => {
+          const cells = [...row.cells];
+          const item = document.createElement('details');
+          item.className = 'field-record';
+          item.open = index === 0;
+          const summary = document.createElement('summary');
+          const heading = document.createElement('div');
+          heading.className = 'field-summary';
+          const label = document.createElement('strong');
+          label.innerHTML = cells[titleColumn]?.innerHTML || `Registro ${index + 1}`;
+          heading.appendChild(label);
+          const secondaryText = secondaryColumn >= 0
+            ? cells[secondaryColumn]?.textContent.trim()
+            : cells.map((cell,cellIndex) => cellIndex !== titleColumn ? cell.textContent.trim() : '').filter(Boolean).slice(0,2).join(' · ');
+          if (secondaryText) {
+            const excerpt = document.createElement('span');
+            excerpt.textContent = secondaryText.slice(0, 190);
+            heading.appendChild(excerpt);
+          }
+          summary.appendChild(heading);
+          item.appendChild(summary);
+          const values = document.createElement('dl');
+          headers.forEach((header,cellIndex) => {
+            const term = document.createElement('dt');
+            term.textContent = header;
+            const description = document.createElement('dd');
+            description.innerHTML = cells[cellIndex]?.innerHTML || '—';
+            values.append(term, description);
+          });
+          item.appendChild(values);
+          list.appendChild(item);
+        });
+        const original = document.createElement('details');
+        original.className = 'original-table';
+        const summary = document.createElement('summary');
+        summary.textContent = 'Ver tabela original';
+        const parent = wrap.parentNode;
+        parent.insertBefore(list, wrap);
+        parent.insertBefore(original, wrap);
+        original.append(summary, wrap);
+      });
+    }
+    function renderSidebar(state) {
+      $('#stage-select').innerHTML = stages.map(item => `<option value="${escapeHTML(item.stage)}">${escapeHTML(titleOf(item))}</option>`).join('');
+      $('#stage-select').value = state.stage;
+      $('#side-nav').innerHTML = `<button type="button" class="${state.screen === 'etapa' ? 'active' : ''}" data-stage="${escapeHTML(state.stage)}" data-screen="etapa"><span class="side-index">↗</span>Visão da etapa</button>` + screensOf(state.stage).map((item,index) => `<button type="button" class="${state.screen === item.screen ? 'active' : ''}" data-stage="${escapeHTML(state.stage)}" data-screen="${escapeHTML(item.screen)}"><span class="side-index">${String(index + 1).padStart(2,'0')}</span>${escapeHTML(titleOf(item))}</button>`).join('');
+    }
+    function render() {
+      if (!stages.length) { $('#main').innerHTML = '<div class="empty">Nenhuma etapa registrada.</div>'; return; }
+      const state = parseRoute();
+      const stage = stageOf(state.stage);
+      const screens = screensOf(state.stage);
+      if (state.screen !== 'etapa' && !screens.some(item => item.screen === state.screen)) state.screen = 'etapa';
+      renderSidebar(state);
+      const stageName = titleOf(stage);
+      if (state.screen === 'etapa') {
+        const extra = `<span class="badge">${screens.length} telas</span><span class="badge">${contracts.filter(item => item.layer === 'product-screen' && item.stage === state.stage).length} contratos de produto</span>`;
+        $('#breadcrumb').innerHTML = `Contratos / <strong>${escapeHTML(stageName)}</strong>`;
+        $('#main').innerHTML = `<div class="record-header"><p class="eyebrow">Contrato da etapa</p><h1>${escapeHTML(stageName)}</h1><p class="record-lead">${escapeHTML(shortText(stage.vocation || 'Finalidade e relação entre telas desta etapa.', 230))}</p><div class="metadata">${badges(stage, extra)}</div></div><div class="screen-grid">${screens.map((item,index) => `<button type="button" class="screen-card" data-stage="${escapeHTML(item.stage)}" data-screen="${escapeHTML(item.screen)}"><small>TELA ${String(index+1).padStart(2,'0')}</small><strong>${escapeHTML(titleOf(item))}</strong><span>${escapeHTML(shortText(item.vocation || item.statusNote || 'Abrir contrato da tela.', 155))}</span></button>`).join('')}</div>${documentView(stage, state.section)}`;
+      } else {
+        const core = screens.find(item => item.screen === state.screen);
+        const products = productsOf(state.stage, state.screen);
+        const views = ['core', ...products.map(item => item.product), ...(products.length > 1 ? ['compare'] : [])];
+        if (!views.includes(state.view)) state.view = 'core';
+        const selected = products.find(item => item.product === state.view) || core;
+        const layerTabs = [{key:'core',label:'Tela · Core'}, ...products.map(item => ({key:item.product,label:item.product})), ...(products.length > 1 ? [{key:'compare',label:'Comparar produtos'}] : [])];
+        $('#breadcrumb').innerHTML = `Contratos / ${escapeHTML(stageName)} / <strong>${escapeHTML(titleOf(core))}</strong>`;
+        $('#main').innerHTML = `<div class="record-header"><p class="eyebrow">Tela da etapa · ${escapeHTML(stageName)}</p><h1>${escapeHTML(titleOf(core))}</h1><p class="record-lead">${escapeHTML(shortText(core.vocation || 'Vocação e capacidades da tela.', 135))}</p><div class="metadata">${badges(selected, `<span class="badge">${products.length} ${products.length === 1 ? 'produto' : 'produtos'}</span>`)}</div></div><nav class="layer-bar" aria-label="Camadas do contrato">${layerTabs.map(item => `<button type="button" class="${state.view === item.key ? 'active' : ''}" data-stage="${escapeHTML(state.stage)}" data-screen="${escapeHTML(state.screen)}" data-view="${escapeHTML(item.key)}">${escapeHTML(item.label)}</button>`).join('')}</nav>${state.view === 'compare' ? compareView(products) : documentView(selected, state.section)}`;
+      }
+      document.title = `${state.screen === 'etapa' ? stageName : titleOf(screens.find(item => item.screen === state.screen))} · Contratos do chassi`;
+      renderTableRecords();
+    }
+    function showSearch() {
+      const query = $('#search').value.trim().toLocaleLowerCase('pt-BR');
+      const panel = $('#search-results');
+      if (!query) { panel.hidden = true; panel.innerHTML = ''; return; }
+      const matches = contracts.flatMap(item => {
+        const section = item.sections.findIndex(part => part.title.toLocaleLowerCase('pt-BR').includes(query) || part.searchText.includes(query));
+        if (!(`${item.title} ${item.vocation} ${item.searchText}`.toLocaleLowerCase('pt-BR').includes(query))) return [];
+        return [{item, section}];
+      }).slice(0, 9);
+      panel.innerHTML = matches.length ? matches.map(({item,section}) => {
+        const context = item.layer === 'stage' ? 'Etapa' : item.layer === 'screen' ? 'Tela · Core' : `Produto ${item.product}`;
+        const subtitle = section >= 0 ? item.sections[section].title : item.vocation || item.statusNote || item.path;
+        return `<button type="button" data-stage="${escapeHTML(item.stage)}" data-screen="${escapeHTML(item.screen || 'etapa')}" data-view="${escapeHTML(item.product || 'core')}" data-section="${section >= 0 ? section : 'auto'}"><strong>${escapeHTML(titleOf(item))}</strong><small>${escapeHTML(context)} · ${escapeHTML(subtitle.slice(0,125))}</small></button>`;
+      }).join('') : '<div class="empty">Nenhum contrato encontrado.</div>';
+      panel.hidden = false;
+    }
+    document.addEventListener('click', event => {
+      const routeButton = event.target.closest('[data-stage]');
+      if (routeButton) {
+        navigate(routeButton.dataset.stage, routeButton.dataset.screen || 'etapa', routeButton.dataset.view || 'core', routeButton.dataset.section || 'auto');
+        $('#search-results').hidden = true;
+      }
+      const copy = event.target.closest('[data-copy]');
+      if (copy) navigator.clipboard?.writeText(copy.dataset.copy).then(() => { copy.textContent = 'Copiado'; setTimeout(() => { copy.textContent = 'Copiar caminho'; }, 1500); });
+      if (!event.target.closest('.search-wrap')) $('#search-results').hidden = true;
+    });
+    $('#stage-select').addEventListener('change', event => navigate(event.target.value));
+    $('#search').addEventListener('input', showSearch);
+    $('#search').addEventListener('focus', showSearch);
+    $('#search').addEventListener('keydown', event => { if (event.key === 'Escape') $('#search-results').hidden = true; });
+    window.addEventListener('hashchange', render);
+    render();
+  </script>
+</body>
+</html>

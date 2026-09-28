@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "contracts": [
+    {
+      "id": "stage:etapa-exemplo",
+      "layer": "stage",
+      "stage": "etapa-exemplo",
+      "path": "etapas/etapa-exemplo/contratos/etapa-exemplo.md",
+      "version": "0.1",
+      "state": "proposal",
+      "dependsOn": []
+    },
+    {
+      "id": "screen:etapa-exemplo:tela-a",
+      "layer": "screen",
+      "stage": "etapa-exemplo",
+      "screen": "tela-a",
+      "path": "etapas/etapa-exemplo/contratos/tela-a.md",
+      "version": "0.1",
+      "state": "proposal",
+      "dependsOn": ["stage:etapa-exemplo"]
+    },
+    {
+      "id": "product-screen:etapa-exemplo:produto-x:tela-a",
+      "layer": "product-screen",
+      "stage": "etapa-exemplo",
+      "product": "produto-x",
+      "screen": "tela-a",
+      "path": "etapas/etapa-exemplo/contratos/produto-x-tela-a.md",
+      "version": "0.1",
+      "state": "proposal",
+      "dependsOn": ["stage:etapa-exemplo", "screen:etapa-exemplo:tela-a"]
+    }
+  ]
+}
