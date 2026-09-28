@@ -1,16 +1,16 @@
-# Recibo de montagem — <etapa> / <tela>
+# Recibo de montagem — `<etapa>` / `<tela>`
 
 **schemaVersion:** 1
 
-**Rodada, etapa, tela e versão:** <identificadores desta execução>
+**Rodada, etapa, tela e versão:** `<identificadores desta execução>`
 
-**Contratos usados:** <etapa, tela e versões revisadas>
+**Contratos usados:** `<etapa, tela e versões revisadas>`
 
 **Estado:** pendente / pronto para revisão / pronto para consumo
 
 **Core:** <arquivo, componente mestre, chave publicada ou `null` e estado de publicação>
 
-**Auditoria Core sem texto:** <quantidade de nós de texto do mestre; todos vazios? defaults das properties de texto vazios? defaults das instâncias IDS vazios? confirmar que textos de prova vivem só em instâncias>
+**Auditoria Core sem texto:** `<quantidade de nós de texto do mestre; todos vazios? defaults das properties de texto vazios? defaults das instâncias IDS vazios? confirmar que textos de prova vivem só em instâncias>`
 
 ## Capacidades montadas
 
@@ -32,7 +32,7 @@ Registre a prova de todos os estados exigidos **para cada item**. O fato de uma 
 | --- | --- | --- | --- | --- | --- |
 |  |  |  |  |  |  |
 
-<Liste peças locais ao Core, sua vocação e por que não pertencem ao IDS geral.>
+`<Liste peças locais ao Core, sua vocação e por que não pertencem ao IDS geral.>`
 
 ## Provas e limites
 
@@ -40,6 +40,6 @@ Registre a prova de todos os estados exigidos **para cada item**. O fato de uma 
 | --- | --- | --- | --- | --- | --- |
 |  |  |  |  |  |  |
 
-**Decisões e desvios aceitos:** <fonte, responsável, data e contrato atualizado>.
+**Decisões e desvios aceitos:** `<fonte, responsável, data e contrato atualizado>`.
 
 Uma montagem visual não comprova publicação. Registre chave somente após confirmar publicação normal no Figma; mantenha como pendente qualquer property, vínculo ou cenário não verificável.

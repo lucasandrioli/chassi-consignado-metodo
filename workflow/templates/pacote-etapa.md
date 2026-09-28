@@ -1,14 +1,14 @@
-# Pacote de instalação — <produto> / <etapa>
+# Pacote de instalação — `<produto>` / `<etapa>`
 
-**schemaVersion:** <versão do formato>
+**schemaVersion:** `<versão do formato>`
 
-**Etapa e versão:** <ID estável e versão do contrato da etapa>
+**Etapa e versão:** `<ID estável e versão do contrato da etapa>`
 
-**Produto e versão:** <ID e versão da receita/biblioteca>
+**Produto e versão:** `<ID e versão da receita/biblioteca>`
 
 **Estado:** rascunho / publicado / compatibilidade verificada
 
-**Biblioteca do produto:** <arquivo e versão acessíveis neste ambiente>
+**Biblioteca do produto:** `<arquivo e versão acessíveis neste ambiente>`
 
 ## Telas publicadas
 
@@ -27,6 +27,6 @@ Uma linha por tela que a etapa deste produto realmente oferece. A quantidade e a
 
 O plugin roda no arquivo da biblioteca do produto: importa **as chaves publicadas do Core** e instala um componente por tela listada, três coleções de variáveis, modos e bindings definidos no pacote do produto. Antes de escrever, valida etapa, produto, chaves e propriedades do Core. Uma tela sem chave Core publicada bloqueia a instalação da etapa; nenhuma chave é inventada a partir do nome do frame. Após validar conteúdo, modos e componentes e publicar, o designer usa os componentes publicados pelo Figma.
 
-**Exclusões ou relações de navegação:** <seguir o contrato da rodada; protótipo pode estar fora do escopo>.
+**Exclusões ou relações de navegação:** `<seguir o contrato da rodada; protótipo pode estar fora do escopo>`.
 
-**Prova em arquivo de equipe:** <links e resultado dos vínculos; métricas nativas quando disponíveis>.
+**Prova em arquivo de equipe:** `<links e resultado dos vínculos; métricas nativas quando disponíveis>`.

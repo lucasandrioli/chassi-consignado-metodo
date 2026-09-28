@@ -13,7 +13,7 @@ Este guia serve para iniciar **qualquer etapa do consignado** com as referência
 
 Escolha **uma tela** da etapa e envie ao Figma Agent:
 
-> Use `/consignado-analise-etapa` para analisar a tela **<nome da tela>** da etapa **<nome da etapa>**. As referências estão em **<link do arquivo ou Section>**. Descubra os produtos e cenários nos frames; investigue Operação, Contexto e Produtos Adicionais quando aparecerem. As bibliotecas IDS **<nomes e versões>** estão conectadas à conversa. Faça somente leitura e entregue separadamente a atualização do contrato da etapa, o contrato Core da tela sem texto de produto e o contrato de cada produto observado, com evidências e pendências.
+> Use `/consignado-analise-etapa` para analisar a tela **`<nome da tela>`** da etapa **`<nome da etapa>`**. As referências estão em **`<link do arquivo ou Section>`**. Descubra os produtos e cenários nos frames; investigue Operação, Contexto e Produtos Adicionais quando aparecerem. As bibliotecas IDS **`<nomes e versões>`** estão conectadas à conversa. Faça somente leitura e entregue separadamente a atualização do contrato da etapa, o contrato Core da tela sem texto de produto e o contrato de cada produto observado, com evidências e pendências.
 
 A análise deve devolver **rascunhos**, não contratos aprovados. Confira contagens, vocações, diferenças visíveis e afirmações sobre regras de negócio. Uma combinação que não aparece nas referências permanece desconhecida. O contrato da etapa é cumulativo: ao analisar a próxima tela, acrescente sua função sem apagar as anteriores.
 

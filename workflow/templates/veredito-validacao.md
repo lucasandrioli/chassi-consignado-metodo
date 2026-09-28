@@ -1,14 +1,14 @@
-# Veredito de validação — <etapa> / <tela ou conjunto>
+# Veredito de validação — `<etapa>` / `<tela ou conjunto>`
 
 **schemaVersion:** 1
 
-**Rodada, etapa e escopo:** <identificadores e versões; tela, produto ou conjunto da etapa>
+**Rodada, etapa e escopo:** `<identificadores e versões; tela, produto ou conjunto da etapa>`
 
 **Estado geral:** APTO_PARA_REVISAO_HUMANA / REPROVADO / PENDENTE / NAO_VERIFICAVEL
 
-**Artefatos confrontados:** <briefing, contratos de etapa/tela/produto, referências, recibos de montagem e pacote; versões e links>
+**Artefatos confrontados:** `<briefing, contratos de etapa/tela/produto, referências, recibos de montagem e pacote; versões e links>`
 
-**Ambiente e data da verificação:** <arquivo Figma, bibliotecas acessíveis, plano quando a prova exigir estatísticas, data>
+**Ambiente e data da verificação:** `<arquivo Figma, bibliotecas acessíveis, plano quando a prova exigir estatísticas, data>`
 
 O veredito compara o que foi contratado com o que existe no Figma. Um contrato revisado não comprova que o componente foi montado; uma montagem visual não comprova origem de biblioteca, publicação ou funcionamento em outro arquivo.
 
@@ -47,7 +47,7 @@ Use `NAO_VERIFICAVEL` quando o arquivo, a permissão, a publicação ou a evidê
 | --- | --- | --- | --- | --- | --- |
 |  |  |  |  |  |  |
 
-**Decisão:** <o que pode avançar, o que permanece pendente e quem revisou; data>. Uma mudança de vocação ou capacidade volta ao contrato correspondente antes de alterar o componente. Uma configuração exclusiva de produto volta à receita desse produto.
+**Decisão:** `<o que pode avançar, o que permanece pendente e quem revisou; data>`. Uma mudança de vocação ou capacidade volta ao contrato correspondente antes de alterar o componente. Uma configuração exclusiva de produto volta à receita desse produto.
 
 ## Prova de instalação e rastreabilidade, quando aplicável
 
@@ -59,4 +59,4 @@ Use `NAO_VERIFICAVEL` quando o arquivo, a permissão, a publicação ou a evidê
 
 As métricas do Figma dependem do ambiente, do plano e do tempo de atualização. Registre separadamente cada detach e sua biblioteca observada; não atribua um único evento a duas bibliotecas por suposição. Se o teste não for elegível, deixe o resultado `não verificável` e não declare comprovada a rastreabilidade nativa.
 
-**Síntese para a pessoa:** <o que foi validado, o que falhou e qual decisão falta, em linguagem curta>.
+**Síntese para a pessoa:** `<o que foi validado, o que falhou e qual decisão falta, em linguagem curta>`.

@@ -1,18 +1,18 @@
-# Contrato de fundação da etapa — <etapa>
+# Contrato de fundação da etapa — `<etapa>`
 
-**ID da etapa:** <id estável>
+**ID da etapa:** `<id estável>`
 
 **Versão:** 0.1
 
-**Briefing usado:** <rodada/versão e link>
+**Briefing usado:** `<rodada/versão e link>`
 
 **Estado:** proposta / revisado / aprovado, com responsável e data
 
-**Referências:** <links e natureza do conteúdo>
+**Referências:** `<links e natureza do conteúdo>`
 
 ## Vocação da etapa
 
-<O que a pessoa precisa compreender ou fazer; separar observação, inferência e confirmação. Não deduzir ordem ou obrigatoriedade de frames isolados.>
+`<O que a pessoa precisa compreender ou fazer; separar observação, inferência e confirmação. Não deduzir ordem ou obrigatoriedade de frames isolados.>`
 
 ## Telas e relações
 
