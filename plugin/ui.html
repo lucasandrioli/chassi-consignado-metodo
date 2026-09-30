@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Biblioteca do produto</title>
+<style>
+  body{font:14px Inter,Arial,sans-serif;margin:0;color:var(--figma-color-text,#222);background:var(--figma-color-bg,#fff)}
+  main{padding:24px;display:grid;gap:16px}h1{font-size:20px;margin:0}p{line-height:1.5;margin:0;color:var(--figma-color-text-secondary,#666)}
+  label{font-weight:600}select,button{font:inherit;width:100%;padding:12px;border-radius:8px}select{border:1px solid var(--figma-color-border,#bbb);background:var(--figma-color-bg,#fff);color:inherit}
+  button{border:0;background:var(--figma-color-bg-brand,#0d62ff);color:#fff;font-weight:600;cursor:pointer}button:disabled{opacity:.5;cursor:default}
+  #confirmRow:not([hidden]){display:grid;gap:8px}#status{min-height:42px;white-space:pre-wrap}.error{color:var(--figma-color-text-danger,#b42318)}.success{color:var(--figma-color-text-success,#067647)}
+</style>
+<main>
+  <h1 id="title">Instalar chassi na biblioteca</h1>
+  <p id="version"></p>
+  <p id="description">Carregando pacotes…</p>
+  <label for="package">Pacote da etapa</label>
+  <select id="package"></select>
+  <button id="action" disabled>Escolha um pacote</button>
+  <button id="verify" disabled style="background:transparent;color:inherit;border:1px solid var(--figma-color-border,#bbb)">Verificar biblioteca (só leitura)</button>
+  <p id="status" role="status" aria-live="polite"></p>
+  <div id="confirmRow" hidden><button id="confirm">Confirmar e instalar</button><button id="cancel" style="background:transparent;color:inherit;border:1px solid var(--figma-color-border,#bbb)">Cancelar</button></div>
+  <p>Instale somente pacotes revisados para esta biblioteca. Confira textos, modos e vínculos antes de publicar pelo Figma.</p>
+</main>
+<script>
+  const select=document.getElementById('package'),button=document.getElementById('action'),verify=document.getElementById('verify');
+  const status=document.getElementById('status'),title=document.getElementById('title');
+  const description=document.getElementById('description');
+  let packages=[];
+  const send=message=>parent.postMessage({pluginMessage:message},'*');
+  function render(){
+    const pkg=packages.find(item=>item.id===select.value);
+    button.disabled=!pkg;verify.disabled=!pkg;
+    button.textContent='Instalar na biblioteca';
+  }
+  select.addEventListener('change',render);
+  let pending=null;
+  const confirmRow=document.getElementById('confirmRow'),confirmBtn=document.getElementById('confirm'),cancelBtn=document.getElementById('cancel');
+  button.addEventListener('click',()=>{
+    button.disabled=true;verify.disabled=true;status.textContent='Conferindo chaves, versões e vínculos…';status.className='';
+    send({type:'plan',packageId:select.value});
+  });
+  confirmBtn.addEventListener('click',()=>{
+    confirmRow.hidden=true;status.textContent='Instalando…';
+    send({type:'install',packageId:pending,confirmed:true});pending=null;
+  });
+  cancelBtn.addEventListener('click',()=>{confirmRow.hidden=true;pending=null;status.textContent='Cancelado. Nada foi alterado.';status.className='';render()});
+  verify.addEventListener('click',()=>{
+    button.disabled=true;verify.disabled=true;status.textContent='Verificando a biblioteca contra o pacote…';status.className='';
+    send({type:'verify',packageId:select.value});
+  });
+  const LABEL={erro:'ERRO',aviso:'AVISO',info:'INFO'};
+  onmessage=event=>{
+    const msg=event.data.pluginMessage;if(!msg)return;
+    if(msg.type==='catalog'){
+      packages=msg.packages;
+      document.getElementById('version').textContent=`Plugin ${msg.pluginVersion}`;
+      title.textContent='Instalar chassi na biblioteca';
+      description.textContent='Instale a receita do produto: componentes Core publicados, coleções de variáveis, modos e bindings. Execute no arquivo da biblioteca correspondente.';
+      select.replaceChildren();
+      for(const pkg of packages){const option=document.createElement('option');option.value=pkg.id;option.textContent=`${pkg.stage} · ${pkg.product} · chassi ${pkg.chassiVersion} · ${pkg.count} telas · ${pkg.state} · pacote ${pkg.hash}`;select.appendChild(option)}
+      if(!packages.length){status.textContent='Nenhum pacote técnico cadastrado.';status.className='error'}
+      render();
+    }
+    if(msg.type==='verified'){
+      const r=msg.report,lines=r.findings.slice(0,40).map(f=>`${LABEL[f.level]} · ${f.where}: ${f.message}`);
+      if(r.findings.length>40)lines.push(`… e mais ${r.findings.length-40} itens.`);
+      status.textContent=`Plugin ${r.pluginVersion} · ${r.erros} erros, ${r.avisos} avisos, ${r.infos} informações (textos do produto que diferem do valor inicial são esperados).`+(lines.length?'\n'+lines.join('\n'):'');
+      status.className=r.erros?'error':'success';render();
+    }
+    if(msg.type==='plan'){
+      if(msg.plan.needsConfirmation){
+        pending=select.value;status.textContent=msg.plan.message+'\n\nConfirma?';status.className='';
+        confirmRow.hidden=false;
+      }else send({type:'install',packageId:select.value,confirmed:false});
+    }
+    if(msg.type==='progress')status.textContent=msg.message;
+    if(msg.type==='installed'){
+      status.textContent=`Plugin ${msg.pluginVersion}: ${msg.count} componentes do produto e ${msg.variableCount} bindings instalados.`+(msg.preservedValues?` ${msg.preservedValues} valores de texto já existentes foram preservados (o texto pertence ao produto).`:'')+' Revise os cenários e publique no Figma.';
+      status.className='success';render();
+    }
+    if(msg.type==='error'){status.textContent=msg.message;status.className='error';render()}
+  };
+  send({type:'ready'});
+</script>
+</html>

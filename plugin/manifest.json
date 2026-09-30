@@ -1,0 +1,11 @@
+{
+  "name": "Chassi · Biblioteca do produto",
+  "id": "000000000000000006",
+  "api": "1.0.0",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "main": "code.js",
+  "ui": "ui.html",
+  "menu": [{"name": "Instalar chassi na biblioteca", "command": "install-product-library"}],
+  "networkAccess": {"allowedDomains": ["none"]}
+}

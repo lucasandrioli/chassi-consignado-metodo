@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "contracts": [
+    {
+      "id": "stage:formalizacao-credito-consignado",
+      "layer": "stage",
+      "stage": "formalizacao-credito-consignado",
+      "path": "etapas/formalizacao-credito-consignado/contratos/etapa.md",
+      "version": "0.2",
+      "state": "proposal",
+      "dependsOn": [],
+      "locked": {
+        "version": "0.2",
+        "state": "proposal",
+        "sha256": "1d00027de1480a06e78435f73995749abb007891aa7b2b2001c911cfdac01306",
+        "dependencies": {},
+        "note": "exemplo: texto neutralizado para repositório público"
+      }
+    },
+    {
+      "id": "screen:formalizacao-credito-consignado:revisao",
+      "layer": "screen",
+      "stage": "formalizacao-credito-consignado",
+      "screen": "revisao",
+      "path": "etapas/formalizacao-credito-consignado/contratos/revisao.md",
+      "version": "0.10",
+      "state": "proposal",
+      "dependsOn": [
+        "stage:formalizacao-credito-consignado"
+      ],
+      "locked": {
+        "version": "0.10",
+        "state": "proposal",
+        "sha256": "7dd96214d3a497237f16ecae38bced8b9dc1e1fa5b236ccc3a4e5e3acbb446a7",
+        "dependencies": {
+          "stage:formalizacao-credito-consignado": "0.2:proposal:1d00027de1480a06e78435f73995749abb007891aa7b2b2001c911cfdac01306"
+        },
+        "note": "exemplo: texto neutralizado para repositório público"
+      }
+    },
+    {
+      "id": "product-screen:formalizacao-credito-consignado:inss:revisao",
+      "layer": "product-screen",
+      "stage": "formalizacao-credito-consignado",
+      "product": "inss",
+      "screen": "revisao",
+      "path": "etapas/formalizacao-credito-consignado/contratos/inss-revisao.md",
+      "version": "0.10",
+      "state": "proposal",
+      "dependsOn": [
+        "stage:formalizacao-credito-consignado",
+        "screen:formalizacao-credito-consignado:revisao"
+      ],
+      "locked": {
+        "version": "0.10",
+        "state": "proposal",
+        "sha256": "8662099fa0649a052e014af42986cf05d6417b82b0b7b7109314a2e506b5dd72",
+        "dependencies": {
+          "stage:formalizacao-credito-consignado": "0.2:proposal:1d00027de1480a06e78435f73995749abb007891aa7b2b2001c911cfdac01306",
+          "screen:formalizacao-credito-consignado:revisao": "0.10:proposal:7dd96214d3a497237f16ecae38bced8b9dc1e1fa5b236ccc3a4e5e3acbb446a7"
+        },
+        "note": "exemplo: texto neutralizado para repositório público"
+      }
+    },
+    {
+      "id": "product-screen:formalizacao-credito-consignado:op:revisao",
+      "layer": "product-screen",
+      "stage": "formalizacao-credito-consignado",
+      "product": "op",
+      "screen": "revisao",
+      "path": "etapas/formalizacao-credito-consignado/contratos/op-revisao.md",
+      "version": "0.10",
+      "state": "proposal",
+      "dependsOn": [
+        "stage:formalizacao-credito-consignado",
+        "screen:formalizacao-credito-consignado:revisao"
+      ],
+      "locked": {
+        "version": "0.10",
+        "state": "proposal",
+        "sha256": "916ca1755ffa3b713680e68567f6845762071d5475ec8ce0e68d005647227123",
+        "dependencies": {
+          "stage:formalizacao-credito-consignado": "0.2:proposal:1d00027de1480a06e78435f73995749abb007891aa7b2b2001c911cfdac01306",
+          "screen:formalizacao-credito-consignado:revisao": "0.10:proposal:7dd96214d3a497237f16ecae38bced8b9dc1e1fa5b236ccc3a4e5e3acbb446a7"
+        },
+        "note": "exemplo: texto neutralizado para repositório público"
+      }
+    }
+  ]
+}

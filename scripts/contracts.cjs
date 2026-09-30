@@ -4,7 +4,6 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 
 const ROOT = path.resolve(__dirname, '..');
-const DEFAULT_REGISTRY = 'foundation/contratos/registro.json';
 const DEFAULT_INDEX = 'contracts/index.json';
 const LAYERS = new Set(['stage', 'screen', 'product-screen']);
 const STATES = new Set(['proposal', 'reviewed', 'approved']);
@@ -21,7 +20,7 @@ function localPath(root, relative) {
   return absolute;
 }
 
-function readRegistry(root = ROOT, registryPath = DEFAULT_REGISTRY) {
+function readRegistry(root = ROOT, registryPath) {
   const absolute = localPath(root, registryPath);
   const registry = JSON.parse(fs.readFileSync(absolute, 'utf8'));
   return { registry, absolute };
@@ -44,7 +43,7 @@ function sameSnapshot(a, b) {
   return JSON.stringify(a || {}) === JSON.stringify(b);
 }
 
-function checkRegistry({ root = ROOT, registryPath = DEFAULT_REGISTRY, ignoreLocks = false, skipPackages = false } = {}) {
+function checkRegistry({ root = ROOT, registryPath, ignoreLocks = false, skipPackages = false } = {}) {
   root = path.resolve(root);
   const { registry, absolute } = readRegistry(root, registryPath);
   const errors = [];
@@ -149,7 +148,7 @@ function checkAll({ root = ROOT, indexPath = DEFAULT_INDEX } = {}) {
   root = path.resolve(root);
   const index = JSON.parse(fs.readFileSync(localPath(root, indexPath), 'utf8'));
   const errors = [];
-  if (index.schemaVersion !== 1 || !Array.isArray(index.registries) || !index.registries.length)
+  if (index.schemaVersion !== 1 || !Array.isArray(index.registries))
     return { errors: ['Índice de registros inválido.'], count: 0 };
   const stages = new Set();
   const registries = new Set();
@@ -179,7 +178,32 @@ function assertAllCurrent(options) {
   return result.count;
 }
 
-function lockSnapshots({ root = ROOT, registryPath = DEFAULT_REGISTRY, note } = {}) {
+function assertBuildEligibility({ root = ROOT, indexPath = DEFAULT_INDEX, packages = [] } = {}) {
+  root = path.resolve(root);
+  const index = JSON.parse(fs.readFileSync(localPath(root, indexPath), 'utf8'));
+  const byId = new Map();
+  for (const registryPath of index.registries || []) {
+    const { registry } = readRegistry(root, registryPath);
+    for (const entry of registry.contracts || []) byId.set(entry.id, entry);
+  }
+  const errors = [];
+  for (const pkg of packages) {
+    if (pkg.state === 'technical-proof') continue;
+    if (pkg.state !== 'approved') {
+      errors.push(`${pkg.id}: pacote ${pkg.state || '(sem estado)'} não pode entrar no build de adoção.`);
+      continue;
+    }
+    const stage = pkg.stage?.id;
+    for (const screen of pkg.screens || []) {
+      for (const id of [`stage:${stage}`, `screen:${stage}:${screen.id}`, `product-screen:${stage}:${pkg.product?.id}:${screen.id}`]) {
+        if (byId.get(id)?.state !== 'approved') errors.push(`${pkg.id}/${screen.id}: ${id} precisa de estado approved para build de adoção.`);
+      }
+    }
+  }
+  if (errors.length) throw new Error(`Pacote sem aprovação dos contratos:\n- ${errors.join('\n- ')}`);
+}
+
+function lockSnapshots({ root = ROOT, registryPath, note, refreshDependencies = false } = {}) {
   if (!note?.trim()) throw new Error('Informe --note para registrar por que os contratos foram conferidos.');
   const result = checkRegistry({ root, registryPath, ignoreLocks: true, skipPackages: true });
   if (result.errors.length) throw new Error(`Registro inválido:\n- ${result.errors.join('\n- ')}`);
@@ -198,6 +222,14 @@ function lockSnapshots({ root = ROOT, registryPath = DEFAULT_REGISTRY, note } = 
     const sha256 = digest(fs.readFileSync(localPath(path.resolve(root), entry.path), 'utf8'));
     const dependencies = dependencySnapshot(entry, byId);
     if (entry.locked?.sha256 === sha256 && entry.locked?.version === entry.version && entry.locked?.state === entry.state && sameSnapshot(entry.locked?.dependencies, dependencies)) continue;
+    // Contrato que não mudou, mas cujo contrato de que depende mudou (por exemplo a etapa, que é cumulativa): com
+    // refreshDependencies a revisão declarada em --note renova o registro de dependências sem exigir nova versão.
+    if (refreshDependencies && entry.locked?.sha256 === sha256 && entry.locked?.version === entry.version && entry.locked?.state === entry.state) {
+      entry.locked.dependencies = dependencies;
+      entry.locked.note = note.trim();
+      changed.push(entry.id);
+      continue;
+    }
     if (entry.locked?.sha256 === sha256 && entry.locked?.version === entry.version &&
         (entry.locked?.state === undefined || entry.locked?.dependencies === undefined)) {
       entry.locked.state = entry.state;
@@ -218,19 +250,24 @@ function lockSnapshots({ root = ROOT, registryPath = DEFAULT_REGISTRY, note } = 
 
 function cli() {
   const [action = 'check', ...args] = process.argv.slice(2);
-  let registryPath = DEFAULT_REGISTRY;
+  let registryPath;
   let explicitRegistry = false;
   let note = '';
+  let root = ROOT;
+  let refresh = false;
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--registry') { registryPath = args[++i]; explicitRegistry = true; }
+    else if (args[i] === '--root') root = path.resolve(args[++i]);
     else if (args[i] === '--note') note = args[++i];
+    else if (args[i] === '--refresh-dependencies') refresh = true;
     else throw new Error(`Argumento desconhecido: ${args[i]}`);
   }
   if (action === 'check') {
-    const count = explicitRegistry ? assertCurrent({ registryPath }).contracts.length : assertAllCurrent();
+    const count = explicitRegistry ? assertCurrent({ root, registryPath }).contracts.length : assertAllCurrent({ root });
     console.log(`Contratos locais consistentes: ${count} arquivos registrados.`);
   } else if (action === 'lock') {
-    const changed = lockSnapshots({ registryPath, note });
+    if (!explicitRegistry) throw new Error('Informe --registry com o registro da etapa que foi revisada.');
+    const changed = lockSnapshots({ root, registryPath, note, refreshDependencies: refresh });
     console.log(changed.length ? `Snapshots registrados: ${changed.join(', ')}.` : 'Nenhum contrato mudou.');
   } else throw new Error(`Ação desconhecida: ${action}`);
 }
@@ -240,4 +277,4 @@ if (require.main === module) {
   catch (error) { console.error(error.message); process.exitCode = 1; }
 }
 
-module.exports = { assertCurrent, assertAllCurrent, checkRegistry, checkAll, lockSnapshots };
+module.exports = { assertCurrent, assertAllCurrent, assertBuildEligibility, checkRegistry, checkAll, lockSnapshots };

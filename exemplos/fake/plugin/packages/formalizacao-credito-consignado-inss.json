@@ -1,0 +1,1724 @@
+{
+  "schemaVersion": 2,
+  "id": "formalizacao-credito-consignado-inss",
+  "state": "technical-proof",
+  "chassiVersion": "1.0",
+  "stage": {
+    "id": "formalizacao-credito-consignado",
+    "name": "Formalização do crédito consignado",
+    "version": "0.1"
+  },
+  "product": {
+    "id": "inss",
+    "version": "0.9"
+  },
+  "compatibleHashes": [],
+  "notes": [
+    "Prova técnica. coreKey do core-revisao lida no Figma em 29/09/2026 (arquivo do Core publicado como \"Consignado Core Components\"); republicar o Core não muda a chave. Botão do Fixed button: instância \"Primary\".",
+    "Estados de contrato: proposal. Textos e valores vêm de contratos-v0.6.md (INSS, seção 3), incluindo conteúdo sintético de portabilidade de benefício (pendência I-4: textos com \"salário\").",
+    "Caminhos de texto omitem os frames intermediários do Core (dados-operacao, secao-*), pois resolveInstancePath só atravessa INSTANCE."
+  ],
+  "axes": {
+    "operation": {
+      "collection": "Operação",
+      "modes": [
+        "PCON",
+        "REFIN"
+      ]
+    },
+    "context": {
+      "collection": "Contexto",
+      "modes": [
+        "desbloqueado",
+        "bloqueado"
+      ]
+    },
+    "additional": {
+      "collection": "Produtos Adicionais",
+      "modes": [
+        "sem adicionais",
+        "portabilidade de benefício"
+      ]
+    }
+  },
+  "screens": [
+    {
+      "id": "revisao",
+      "name": "Revisão",
+      "version": "0.9",
+      "coreKey": "4a27f4beda4fa387be07dfe3cfb352b566e61d46",
+      "sourceContract": "etapas/formalizacao-credito-consignado/contratos/inss-revisao.md",
+      "bindings": [
+        {
+          "id": "texto-titulo",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "Navigation header"
+            ],
+            "property": "Large title content"
+          },
+          "default": "Revise as condições do seu empréstimo",
+          "operation": {
+            "PCON": "Revise as condições do seu empréstimo",
+            "REFIN": "Revise as condições do seu refinanciamento"
+          }
+        },
+        {
+          "id": "texto-botao",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "Fixed button",
+              "Primary"
+            ],
+            "property": "Label content"
+          },
+          "default": "Continuar"
+        },
+        {
+          "id": "texto-condicoes",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "body-condicoes"
+            ],
+            "property": "Content"
+          },
+          "default": "Condições válidas para hoje."
+        },
+        {
+          "id": "texto-item-valor-receber-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-valor-receber",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Valor a receber"
+        },
+        {
+          "id": "texto-item-valor-receber-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-valor-receber",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "R$ 55.898,46",
+          "operation": {
+            "PCON": "R$ 55.898,46",
+            "REFIN": "R$ 58.201,57"
+          }
+        },
+        {
+          "id": "texto-item-valor-receber-descricao-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-valor-receber",
+              "Description 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Editar"
+        },
+        {
+          "id": "texto-item-saldo-refinanciar-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-saldo-refinanciar",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "operation": {
+            "REFIN": "Saldo a refinanciar"
+          }
+        },
+        {
+          "id": "texto-item-saldo-refinanciar-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-saldo-refinanciar",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "operation": {
+            "REFIN": "R$ 355,55"
+          }
+        },
+        {
+          "id": "texto-item-saldo-refinanciar-descricao-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-saldo-refinanciar",
+              "Description 01"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "operation": {
+            "REFIN": "Saber mais"
+          }
+        },
+        {
+          "id": "texto-item-parcelas-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-parcelas",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Parcelas"
+        },
+        {
+          "id": "texto-item-parcelas-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-parcelas",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "96× de R$1.324,57",
+          "operation": {
+            "PCON": "96× de R$1.324,57",
+            "REFIN": "96× de R$ 1.357,82"
+          }
+        },
+        {
+          "id": "texto-item-parcelas-descricao-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-parcelas",
+              "Description 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Editar"
+        },
+        {
+          "id": "texto-item-total-pagar-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-total-pagar",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Total a pagar"
+        },
+        {
+          "id": "texto-item-total-pagar-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-total-pagar",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "R$ 127.158,72",
+          "operation": {
+            "PCON": "R$ 127.158,72",
+            "REFIN": "R$ 130.350,72"
+          }
+        },
+        {
+          "id": "texto-item-total-pagar-descricao-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-total-pagar",
+              "Description 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Saber mais"
+        },
+        {
+          "id": "texto-item-iof-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-iof",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "IOF"
+        },
+        {
+          "id": "texto-item-iof-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-iof",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "R$ 1.936,73",
+          "operation": {
+            "PCON": "R$ 1.936,73",
+            "REFIN": "R$ 2.018,06"
+          }
+        },
+        {
+          "id": "texto-item-taxa-juros-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-taxa-juros",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Taxa de juros"
+        },
+        {
+          "id": "texto-item-taxa-juros-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-taxa-juros",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "1,85% ao mês e 24,6% ao ano",
+          "operation": {
+            "PCON": "1,85% ao mês e 24,6% ao ano",
+            "REFIN": "1,79% ao mês e 23,72% ao ano"
+          }
+        },
+        {
+          "id": "texto-item-cet-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-cet",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Custo Efetivo Total (CET)"
+        },
+        {
+          "id": "texto-item-cet-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-cet",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "1,95% ao mês e 26,02% ao ano",
+          "operation": {
+            "PCON": "1,95% ao mês e 26,02% ao ano",
+            "REFIN": "1,88% ao mês e 25,11% ao ano"
+          }
+        },
+        {
+          "id": "texto-item-periodo-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-periodo",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Período de pagamento"
+        },
+        {
+          "id": "texto-item-periodo-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-periodo",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "Abril de 2026 a março de 2034"
+        },
+        {
+          "id": "texto-item-dinheiro-conta-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-dinheiro-conta",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Dinheiro na conta"
+        },
+        {
+          "id": "texto-item-dinheiro-conta-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-dinheiro-conta",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "Até 12 de fevereiro de 2026",
+          "context": {
+            "desbloqueado": "Até 12 de fevereiro de 2026",
+            "bloqueado": "Após o desbloqueio do benefício"
+          }
+        },
+        {
+          "id": "texto-item-conta-recebimento-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-conta-recebimento",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "Conta para recebimento"
+        },
+        {
+          "id": "texto-item-conta-recebimento-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-conta-recebimento",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "Agência 2500 | Conta 58788-2"
+        },
+        {
+          "id": "texto-section-portabilidade",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "section-portabilidade"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "Portabilidade de benefício"
+          }
+        },
+        {
+          "id": "texto-port-fonte-pagadora-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-fonte-pagadora",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "Fonte pagadora"
+          }
+        },
+        {
+          "id": "texto-port-fonte-pagadora-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-fonte-pagadora",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "Governo do Rio de Janeiro"
+          }
+        },
+        {
+          "id": "texto-port-cnpj-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-cnpj",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "CNPJ"
+          }
+        },
+        {
+          "id": "texto-port-cnpj-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-cnpj",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "42.591.651/1402-39"
+          }
+        },
+        {
+          "id": "texto-port-banco-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-banco",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "Banco da conta salário"
+          }
+        },
+        {
+          "id": "texto-port-banco-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-banco",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "Bradesco"
+          }
+        },
+        {
+          "id": "texto-port-prazo-label-01",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-prazo",
+              "Label 01"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "Prazo de aprovação"
+          }
+        },
+        {
+          "id": "texto-port-prazo-label-02",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-prazo",
+              "Label 02"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "Até 5 dias úteis"
+          }
+        },
+        {
+          "id": "texto-aviso-portabilidade",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "aviso-portabilidade"
+            ],
+            "property": "Content"
+          },
+          "default": "",
+          "additional": {
+            "portabilidade de benefício": "Se o próximo salário for pago antes da aprovação, o valor cairá no banco atual."
+          }
+        },
+        {
+          "id": "prop-item-valor-receber-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-valor-receber"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "Icon",
+          "static": true
+        },
+        {
+          "id": "prop-item-saldo-refinanciar-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-saldo-refinanciar"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "Icon",
+          "static": true
+        },
+        {
+          "id": "prop-item-parcelas-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-parcelas"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "Icon",
+          "static": true
+        },
+        {
+          "id": "prop-item-total-pagar-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-total-pagar"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "Icon",
+          "static": true
+        },
+        {
+          "id": "prop-item-iof-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-iof"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-taxa-juros-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-taxa-juros"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-cet-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-cet"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-forma-pagamento-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-forma-pagamento"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-periodo-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-periodo"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-dinheiro-conta-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-dinheiro-conta"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-data-portabilidade-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-data-portabilidade"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-conta-recebimento-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-conta-recebimento"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-fonte-pagadora-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-fonte-pagadora"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-matricula-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-matricula"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-port-fonte-pagadora-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-fonte-pagadora"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-port-cnpj-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-cnpj"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-port-banco-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-banco"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-port-prazo-trailing-item",
+          "type": "STRING",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-prazo"
+            ],
+            "property": "Trailing item"
+          },
+          "default": "None",
+          "static": true
+        },
+        {
+          "id": "prop-item-valor-receber-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-valor-receber"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-valor-receber-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-valor-receber"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-valor-receber-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-valor-receber"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-saldo-refinanciar-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-saldo-refinanciar"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-saldo-refinanciar-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-saldo-refinanciar"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-saldo-refinanciar-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-saldo-refinanciar"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-parcelas-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-parcelas"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-parcelas-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-parcelas"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-parcelas-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-parcelas"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-total-pagar-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-total-pagar"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-total-pagar-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-total-pagar"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-total-pagar-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-total-pagar"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-iof-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-iof"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-iof-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-iof"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-iof-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-iof"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-taxa-juros-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-taxa-juros"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-taxa-juros-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-taxa-juros"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-taxa-juros-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-taxa-juros"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-cet-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-cet"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-cet-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-cet"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-cet-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-cet"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-forma-pagamento-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-forma-pagamento"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-forma-pagamento-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-forma-pagamento"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-forma-pagamento-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-forma-pagamento"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-periodo-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-periodo"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-periodo-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-periodo"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-periodo-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-periodo"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-dinheiro-conta-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-dinheiro-conta"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-dinheiro-conta-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-dinheiro-conta"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-dinheiro-conta-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-dinheiro-conta"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-data-portabilidade-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-data-portabilidade"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-data-portabilidade-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-data-portabilidade"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-data-portabilidade-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-data-portabilidade"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-conta-recebimento-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-conta-recebimento"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-conta-recebimento-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-conta-recebimento"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-conta-recebimento-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-conta-recebimento"
+            ],
+            "property": "Has next item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-fonte-pagadora-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-fonte-pagadora"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-fonte-pagadora-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-fonte-pagadora"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-fonte-pagadora-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-fonte-pagadora"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-item-matricula-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-matricula"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-item-matricula-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-matricula"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-item-matricula-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "item-matricula"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-port-fonte-pagadora-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-fonte-pagadora"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-port-fonte-pagadora-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-fonte-pagadora"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-port-fonte-pagadora-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-fonte-pagadora"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-port-cnpj-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-cnpj"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-port-cnpj-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-cnpj"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-port-cnpj-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-cnpj"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-port-banco-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-banco"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-port-banco-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-banco"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-port-banco-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-banco"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "prop-port-prazo-show-supporting-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-prazo"
+            ],
+            "property": "Show supporting item"
+          },
+          "default": false
+        },
+        {
+          "id": "prop-port-prazo-show-leading-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-prazo"
+            ],
+            "property": "Show leading item"
+          },
+          "default": false,
+          "static": true
+        },
+        {
+          "id": "prop-port-prazo-has-next-item",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "component",
+            "path": [
+              "port-prazo"
+            ],
+            "property": "Has next item"
+          },
+          "default": true
+        },
+        {
+          "id": "visivel-tabela-comparativa",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "tabela-comparativa"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-subtitulo-detalhes",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "subtitulo-detalhes"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-banner-port-atq",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "banner-port-atq"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-secao-seguro",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "secao-seguro"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-secao-portabilidade",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "secao-portabilidade"
+            ]
+          },
+          "default": false,
+          "additional": {
+            "sem adicionais": false,
+            "portabilidade de benefício": true
+          }
+        },
+        {
+          "id": "visivel-aviso-portabilidade",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "aviso-portabilidade"
+            ]
+          },
+          "default": false,
+          "additional": {
+            "sem adicionais": false,
+            "portabilidade de benefício": true
+          }
+        },
+        {
+          "id": "visivel-overlay-operacao-nao-utilizada",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "overlay-operacao-nao-utilizada"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-wrapper-rule-operacao-sem-revisao",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "overlay-operacao-nao-utilizada",
+              "wrapper-rule",
+              "wrapper-rule-operacao-sem-revisao"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-item-valor-receber",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "dados-operacao",
+              "item-valor-receber"
+            ]
+          },
+          "default": true
+        },
+        {
+          "id": "visivel-item-saldo-refinanciar",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "dados-operacao",
+              "item-saldo-refinanciar"
+            ]
+          },
+          "default": false,
+          "operation": {
+            "PCON": false,
+            "REFIN": true
+          }
+        },
+        {
+          "id": "visivel-item-forma-pagamento",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "dados-operacao",
+              "item-forma-pagamento"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-item-dinheiro-conta",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "dados-operacao",
+              "item-dinheiro-conta"
+            ]
+          },
+          "default": true
+        },
+        {
+          "id": "visivel-item-data-portabilidade",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "dados-operacao",
+              "item-data-portabilidade"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-item-conta-recebimento",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "dados-operacao",
+              "item-conta-recebimento"
+            ]
+          },
+          "default": true
+        },
+        {
+          "id": "visivel-item-fonte-pagadora",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "dados-operacao",
+              "item-fonte-pagadora"
+            ]
+          },
+          "default": false
+        },
+        {
+          "id": "visivel-item-matricula",
+          "type": "BOOLEAN",
+          "target": {
+            "kind": "visible",
+            "path": [
+              "conteudo",
+              "detalhes-portabilidade",
+              "dados-operacao",
+              "item-matricula"
+            ]
+          },
+          "default": false
+        }
+      ]
+    }
+  ]
+}
